@@ -1,5 +1,5 @@
 import unittest
-from polynomial import Polynomial
+from Polynomial import Polynomial
 
 class TestPolynomial(unittest.TestCase):
     def setUp(self):
