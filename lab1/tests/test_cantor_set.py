@@ -1,5 +1,5 @@
 import unittest
-from cantor_set import CantorSet
+from CantorSet import CantorSet
 
 
 class TestCantorSet(unittest.TestCase):
