@@ -1,4 +1,5 @@
 import itertools
+
 class CantorSet:
     """
     @brief Класс неориентированного множества (с поддержкой вложений),
@@ -7,7 +8,6 @@ class CantorSet:
 
     # Статическая переменная класса
     _instance_count = 0
-
     def __init__(self, data=None):
         """
         @brief Инициализирует множество. Если передана строка, парсит ее.
@@ -18,57 +18,106 @@ class CantorSet:
 
         if data is None:
             return
-        if isinstance(data, CantorSet):
-            # копирование
-            for e in data._elements:
-                self.add(e)
-        elif isinstance(data, str):
-            # парсинг строки вида "{...}"
-            s = data.strip()
-            if not s.startswith("{") or not s.endswith("}"):
-                raise ValueError("Неправильный формат множества: {}".format(data))
-            inner = s[1:-1].strip()
-            if inner == "":
-                return
-            i = 0
-            while i < len(inner):
-                if inner[i].isspace():
-                    i += 1
-                    continue
-                if inner[i] == '{':
-                    # найдем соответствующую закрывающую скобку
-                    level = 0
-                    start = i
-                    while i < len(inner):
-                        if inner[i] == '{':
-                            level += 1
-                        elif inner[i] == '}':
-                            level -= 1
-                            if level == 0:
-                                break
-                        i += 1
-                    if level != 0:
-                        raise ValueError("Несоответствие скобок в множестве")
-                    sub_str = inner[start:i+1]
-                    sub_set = CantorSet(sub_str)
-                    self.add(sub_set)
-                    i += 1
-                else:
-                    # парсим атомарный элемент до запятой или конца
-                    start = i
-                    while i < len(inner) and inner[i] not in {',', '}'}:
-                        i += 1
-                    item = inner[start:i].strip()
-                    if item != "":
-                        self.add(item)
-                # пропустить запятые и пробелы
-                while i < len(inner) and inner[i] in {',', ' '}:
-                    i += 1
+        
+        self._initialize_from_data(data)
 
+    def _initialize_from_data(self, data):
+        """Обрабатывает различные типы входных данных для инициализации."""
+        if isinstance(data, CantorSet):
+            self._initialize_from_cantor_set(data)
+        elif isinstance(data, str):
+            self._initialize_from_string(data)
         else:
-            # инициализация из iterable
-            for e in data:
-                self.add(e)
+            self._initialize_from_iterable(data)
+
+    def _initialize_from_cantor_set(self, cantor_set):
+        """Инициализирует множество из другого объекта CantorSet."""
+        for e in cantor_set._elements:
+            self.add(e)
+
+    def _initialize_from_string(self, data_str):
+        """Парсит строковое представление множества."""
+        s = data_str.strip()
+        self._validate_string_format(s)
+        
+        inner = s[1:-1].strip()
+        if inner == "":
+            return
+            
+        self._parse_inner_string(inner)
+
+    def _validate_string_format(self, s):
+        """Проверяет корректность формата строки."""
+        if not s.startswith("{") or not s.endswith("}"):
+            raise ValueError("Неправильный формат множества: {}".format(s))
+
+    def _parse_inner_string(self, inner):
+        """Парсит внутреннее содержимое строкового представления."""
+        i = 0
+        while i < len(inner):
+            i = self._skip_whitespace(inner, i)
+            if i >= len(inner):
+                break
+                
+            if inner[i] == '{':
+                i = self._parse_nested_set(inner, i)
+            else:
+                i = self._parse_atomic_element(inner, i)
+            
+            i = self._skip_separators(inner, i)
+
+    def _skip_whitespace(self, inner, i):
+        """Пропускает пробельные символы."""
+        while i < len(inner) and inner[i].isspace():
+            i += 1
+        return i
+
+    def _skip_separators(self, inner, i):
+        """Пропускает запятые и пробелы."""
+        while i < len(inner) and inner[i] in {',', ' '}:
+            i += 1
+        return i
+
+    def _parse_nested_set(self, inner, i):
+        """Парсит вложенное множество."""
+        start = i
+        i = self._find_matching_brace(inner, i)
+        sub_str = inner[start:i+1]
+        sub_set = CantorSet(sub_str)
+        self.add(sub_set)
+        return i + 1
+
+    def _find_matching_brace(self, inner, i):
+        """Находит закрывающую скобку, соответствующую открывающей."""
+        level = 0
+        while i < len(inner):
+            if inner[i] == '{':
+                level += 1
+            elif inner[i] == '}':
+                level -= 1
+                if level == 0:
+                    break
+            i += 1
+            
+        if level != 0:
+            raise ValueError("Несоответствие скобок в множестве")
+        return i
+
+    def _parse_atomic_element(self, inner, i):
+        """Парсит атомарный элемент (не множество)."""
+        start = i
+        while i < len(inner) and inner[i] not in {',', '}'}:
+            i += 1
+            
+        item = inner[start:i].strip()
+        if item != "":
+            self.add(item)
+        return i
+
+    def _initialize_from_iterable(self, data):
+        """Инициализирует множество из iterable объекта."""
+        for e in data:
+            self.add(e)
 
     # Управление доступом - свойства только для чтения (константные методы)
     @property
@@ -159,21 +208,27 @@ class CantorSet:
         @param element Добавляемый элемент (строка или CantorSet).
         """
         if isinstance(element, CantorSet):
-            # не добавляем дубликаты вложенных множеств
-            for e in self._elements:
-                if isinstance(e, CantorSet) and e == element:
-                    return
-            # клонируем вложенное множество
-            self._elements.append(CantorSet(element))
+            self._add_cantor_set(element)
         else:
-            item = element.strip()
-            if item == "":
+            self._add_atomic_element(element)
+
+    def _add_cantor_set(self, cantor_set):
+        """Добавляет вложенное множество."""
+        for e in self._elements:
+            if isinstance(e, CantorSet) and e == cantor_set:
                 return
-            # не добавляем дубликат строкового элемента
-            for e in self._elements:
-                if not isinstance(e, CantorSet) and e == item:
-                    return
-            self._elements.append(item)
+        self._elements.append(CantorSet(cantor_set))
+
+    def _add_atomic_element(self, element):
+        """Добавляет атомарный элемент."""
+        item = element.strip()
+        if item == "":
+            return
+            
+        for e in self._elements:
+            if not isinstance(e, CantorSet) and e == item:
+                return
+        self._elements.append(item)
 
     def remove(self, element):
         """
@@ -196,7 +251,7 @@ class CantorSet:
         @brief Проверяет принадлежность элемента множеству.
         @param element Проверяемый элемент.
         @return True, если элемент принадлежит множеству, иначе False.
-        """
+        """ 
         return self.contains(element)
 
     def __eq__(self, other):
@@ -207,7 +262,11 @@ class CantorSet:
             return False
         if len(self._elements) != len(other._elements):
             return False
-        # каждое элемент в self должен быть в other
+            
+        return self._check_elements_equality(other)
+
+    def _check_elements_equality(self, other):
+        """Проверяет, что все элементы текущего множества есть в другом."""
         for e in self._elements:
             found = False
             for oe in other._elements:
@@ -317,3 +376,4 @@ class CantorSet:
             else:
                 elems_str.append(str(e))
         return "{" + ", ".join(elems_str) + "}"
+    
