@@ -1,0 +1,6 @@
+class AnimalHealthException(OceanariumBaseException):
+    """Исключение при проблемах со здоровьем животного."""
+    def __init__(self, animal_id, health_issue):
+        self.animal_id = animal_id
+        self.health_issue = health_issue
+        super().__init__(f"Проблема со здоровьем животного {animal_id}: {health_issue}")
