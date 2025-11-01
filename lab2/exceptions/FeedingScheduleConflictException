@@ -1,0 +1,6 @@
+class FeedingScheduleConflictException(OceanariumBaseException):
+    """Исключение при конфликте расписания кормления."""
+    def __init__(self, animal_id, feeding_time):
+        self.animal_id = animal_id
+        self.feeding_time = feeding_time
+        super().__init__(f"Конфликт расписания кормления для животного {animal_id} в {feeding_time}")
