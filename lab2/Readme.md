@@ -55,6 +55,8 @@ MarineConservation 5 0 →
 OceanographicResearch 5 0 →
 Oceanarium 15 13 → Animal, Tank, Staff, Visitor, Equipment, MonitoringSystem, SecuritySystem, BankAccount, TicketOffice, FoodSupplier, EducationalProgram, EmergencyResponse
 
+Исключения:
+
 OceanariumBaseException 0 0 →
 AnimalNotFoundException 1 0 →
 InsufficientFundsException 2 0 →
