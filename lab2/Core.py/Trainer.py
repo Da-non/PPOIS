@@ -1,4 +1,13 @@
 class Trainer(Staff):
+    """
+    Класс тренера животных.
+
+    Attributes:
+        specialization (str): Специализация тренера
+        training_sessions_count (int): Количество проведённых тренировок
+        animals_trained (List[str]): Список ID обученных животных
+    """
+
     def __init__(self, staff_id: str, name: str, salary: float, experience_years: int, specialization: str):
         super().__init__(staff_id, name, "Trainer", salary, experience_years)
         self.specialization = specialization
@@ -17,6 +26,7 @@ class Trainer(Staff):
         ]
 
     def train_animal(self, animal: Animal, skill: str) -> bool:
+        """Тренирует животное."""
         if isinstance(animal, Dolphin) and self.specialization == "marine_mammals":
             success = animal.learn_trick(skill)
             if success:
@@ -27,6 +37,7 @@ class Trainer(Staff):
         return False
 
     def assess_animal_behavior(self, animal: Animal) -> Dict[str, any]:
+        """Оценивает поведение животного."""
         assessment = {
             "activity_level": animal.activity_level,
             "stress_level": animal.stress_level,
