@@ -1,0 +1,6 @@
+class TicketExpiredException(OceanariumBaseException):
+    """Исключение при использовании просроченного билета."""
+    def __init__(self, ticket_id, expiry_date):
+        self.ticket_id = ticket_id
+        self.expiry_date = expiry_date
+        super().__init__(f"Билет {ticket_id} просрочен (срок действия до {expiry_date})")
