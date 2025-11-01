@@ -1,4 +1,13 @@
 class Turtle(MarineAnimal):
+    """
+    Класс морской черепахи.
+
+    Attributes:
+        shell_hardness (int): Твёрдость панциря (1-10)
+        navigation_accuracy (float): Точность навигации (процент)
+        nesting_sites (List[str]): Список мест гнездования
+    """
+
     def __init__(self, animal_id: str, name: str, age: int, weight: float):
         super().__init__(animal_id, name, "Sea Turtle", age, weight, 85.0, 20)
         self.shell_hardness = random.randint(7, 10)
@@ -8,17 +17,20 @@ class Turtle(MarineAnimal):
         self.flipper_strength = random.uniform(50, 150)
 
     def navigate(self, destination: str) -> bool:
+        """Навигирует к месту назначения."""
         success = random.random() < (self.navigation_accuracy / 100)
         if success:
             self.activity_level += 10
         return success
 
     def lay_eggs(self, nesting_site: str) -> int:
+        """Откладывает яйца."""
         if nesting_site in self.nesting_sites:
             egg_count = random.randint(50, 120)
             return egg_count
         return 0
 
     def retract_into_shell(self) -> bool:
+        """Прячется в панцирь."""
         self.stress_level = max(0, self.stress_level - 20)
         return True
