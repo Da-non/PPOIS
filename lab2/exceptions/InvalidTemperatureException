@@ -1,0 +1,7 @@
+class InvalidTemperatureException(OceanariumBaseException):
+    """Исключение при недопустимой температуре воды."""
+    def __init__(self, current_temp, min_temp, max_temp):
+        self.current_temp = current_temp
+        self.min_temp = min_temp
+        self.max_temp = max_temp
+        super().__init__(f"Недопустимая температура {current_temp}°C (допустимо: {min_temp}-{max_temp}°C)")
