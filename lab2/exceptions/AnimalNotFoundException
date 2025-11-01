@@ -1,0 +1,5 @@
+class AnimalNotFoundException(OceanariumBaseException):
+    """Исключение при попытке найти несуществующее животное."""
+    def __init__(self, animal_id):
+        self.animal_id = animal_id
+        super().__init__(f"Животное с ID {animal_id} не найдено")
