@@ -1,4 +1,13 @@
 class MarineAnimal(Animal):
+    """
+    Класс для морских животных.
+
+    Attributes:
+        salt_tolerance (float): Переносимость соли (0-100)
+        depth_preference (int): Предпочтительная глубина в метрах
+        swimming_speed (float): Скорость плавания в км/ч
+    """
+
     def __init__(self, animal_id: str, name: str, species: str, age: int, weight: float,
                  salt_tolerance: float, depth_preference: int):
         super().__init__(animal_id, name, species, age, weight)
@@ -9,7 +18,7 @@ class MarineAnimal(Animal):
         self.territorial_radius = random.uniform(5, 50)
 
     def get_feeding_requirements(self) -> Dict[str, float]:
-        base_food = self.weight * 0.05
+        base_food = self.weight * 0.05  # 5% от веса тела
         return {
             "fish": base_food * 0.6,
             "krill": base_food * 0.3,
@@ -26,6 +35,7 @@ class MarineAnimal(Animal):
         }
 
     def swim(self, distance: float) -> float:
+        """Плавает на заданное расстояние."""
         time_taken = distance / self.swimming_speed
         self.activity_level = max(0, self.activity_level - distance * 0.1)
         return time_taken
