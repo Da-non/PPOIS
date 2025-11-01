@@ -1,0 +1,6 @@
+class UnauthorizedAccessException(OceanariumBaseException):
+    """Исключение при попытке неавторизованного доступа."""
+    def __init__(self, user_role, required_role):
+        self.user_role = user_role
+        self.required_role = required_role
+        super().__init__(f"Недостаточно прав: роль {user_role}, требуется {required_role}")
