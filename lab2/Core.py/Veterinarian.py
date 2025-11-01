@@ -1,4 +1,13 @@
 class Veterinarian(Staff):
+    """
+    Класс ветеринара.
+
+    Attributes:
+        medical_license (str): Номер медицинской лицензии
+        surgeries_performed (int): Количество проведённых операций
+        specializations (List[str]): Медицинские специализации
+    """
+
     def __init__(self, staff_id: str, name: str, salary: float, experience_years: int, medical_license: str):
         super().__init__(staff_id, name, "Veterinarian", salary, experience_years)
         self.medical_license = medical_license
@@ -17,6 +26,7 @@ class Veterinarian(Staff):
         ]
 
     def examine_animal(self, animal: Animal) -> Dict[str, any]:
+        """Осматривает животное."""
         examination_result = {
             "temperature": random.uniform(36, 39),
             "heart_rate": random.randint(60, 120),
@@ -33,6 +43,7 @@ class Veterinarian(Staff):
         return examination_result
 
     def prescribe_treatment(self, animal: Animal, condition: str) -> List[str]:
+        """Назначает лечение."""
         treatments = {
             "infection": ["Антибиотики", "Покой", "Контроль температуры"],
             "injury": ["Обезболивающие", "Перевязка", "Ограничение движения"],
