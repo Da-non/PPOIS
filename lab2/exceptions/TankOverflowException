@@ -1,0 +1,7 @@
+class TankOverflowException(OceanariumBaseException):
+    """Исключение при переполнении резервуара."""
+    def __init__(self, tank_id, capacity, attempted_volume):
+        self.tank_id = tank_id
+        self.capacity = capacity
+        self.attempted_volume = attempted_volume
+        super().__init__(f"Резервуар {tank_id} переполнен: вместимость {capacity}, попытка добавить {attempted_volume}")
