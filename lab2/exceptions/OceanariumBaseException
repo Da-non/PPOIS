@@ -1,0 +1,3 @@
+class OceanariumBaseException(Exception):
+    """Базовое исключение для всех ошибок океанариума."""
+    pass
