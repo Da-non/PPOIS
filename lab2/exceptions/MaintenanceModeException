@@ -1,0 +1,6 @@
+class MaintenanceModeException(OceanariumBaseException):
+    """Исключение при попытке доступа во время технического обслуживания."""
+    def __init__(self, area_name, maintenance_end_time):
+        self.area_name = area_name
+        self.maintenance_end_time = maintenance_end_time
+        super().__init__(f"Зона {area_name} на техническом обслуживании до {maintenance_end_time}")
