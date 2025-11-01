@@ -1,0 +1,6 @@
+class EquipmentMalfunctionException(OceanariumBaseException):
+    """Исключение при неисправности оборудования."""
+    def __init__(self, equipment_name, error_code):
+        self.equipment_name = equipment_name
+        self.error_code = error_code
+        super().__init__(f"Неисправность оборудования {equipment_name}: код ошибки {error_code}")
