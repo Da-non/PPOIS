@@ -1,4 +1,13 @@
 class Feeder(Staff):
+    """
+    Класс кормильца животных.
+
+    Attributes:
+        feeding_schedule (Dict): Расписание кормления
+        food_inventory (Dict[str, float]): Инвентарь корма
+        animals_assigned (List[str]): Назначенные животные
+    """
+
     def __init__(self, staff_id: str, name: str, salary: float, experience_years: int):
         super().__init__(staff_id, name, "Feeder", salary, experience_years)
         self.feeding_schedule = {}
@@ -17,6 +26,7 @@ class Feeder(Staff):
         ]
 
     def feed_animal(self, animal: Animal, food_type: str, amount: float) -> bool:
+        """Кормит животное."""
         if food_type in self.food_inventory and self.food_inventory[food_type] >= amount:
             success = animal.feed(food_type, amount)
             if success:
@@ -31,10 +41,12 @@ class Feeder(Staff):
         return False
 
     def check_food_quality(self, food_type: str) -> bool:
+        """Проверяет качество корма."""
         freshness = random.uniform(0, 100)
         return freshness > 70
 
     def restock_food(self, food_type: str, amount: float) -> None:
+        """Пополняет запас корма."""
         if food_type in self.food_inventory:
             self.food_inventory[food_type] += amount
         else:
