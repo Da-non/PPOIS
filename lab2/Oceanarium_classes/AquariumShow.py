@@ -9,76 +9,76 @@ class AquariumShow:
         self.animals_involved = []
         self.trainers_required = []
         self.equipment_needed = []
-        self.max_audience = random.randint(100, 500)
-        self.show_type = ""
+        self.max_spectators = random.randint(50, 300)
+        self.show_type = random.choice(["dolphin", "seal", "diving", "feeding"])
         self.difficulty_level = random.randint(1, 5)
-        self.success_rate = random.uniform(75, 95)
-        self.rehearsals_completed = 0
+        self.success_rate = random.uniform(80, 98)
 
-    def add_animal(self, animal: Animal, role: str) -> bool:
+    def schedule_show(self, show_date: datetime, location: str, trainer_ids: List[str]) -> bool:
+        """Планирует показ шоу."""
+        show_slot = {
+            "show_id": self.show_id,
+            "date": show_date,
+            "location": location,
+            "trainers": trainer_ids,
+            "status": "scheduled",
+            "spectators_count": 0
+        }
+        self.schedule.append(show_slot)
+        return True
+
+    def add_animal(self, animal: Animal) -> bool:
         """Добавляет животное в шоу."""
         if animal.animal_id not in [a.animal_id for a in self.animals_involved]:
-            show_animal = {
-                "animal": animal,
-                "role": role,
-                "performance_rating": random.uniform(60, 95),
-                "rehearsals_attended": 0
-            }
-            self.animals_involved.append(show_animal)
+            self.animals_involved.append(animal)
+            animal.activity_level += 5  # Животные возбуждаются перед шоу
             return True
         return False
 
-    def schedule_show(self, date_time: datetime, location: str) -> str:
-        """Планирует показ шоу."""
-        schedule_id = f"SHOW_{len(self.schedule):04d}"
-        show_schedule = {
-            "schedule_id": schedule_id,
-            "date_time": date_time,
-            "location": location,
-            "status": "scheduled",
-            "audience_count": 0,
-            "duration": self.duration,
-            "trainers_assigned": []
-        }
-        self.schedule.append(show_schedule)
-        return schedule_id
-
-    def conduct_rehearsal(self) -> Dict[str, any]:
-        """Проводит репетицию шоу."""
-        rehearsal_result = {
-            "show_id": self.show_id,
-            "rehearsal_date": datetime.now(),
-            "animals_participated": len(self.animals_involved),
-            "success_rate": self.success_rate,
-            "issues_found": random.randint(0, 3),
-            "duration": self.duration * 0.8
-        }
-
-        for animal_data in self.animals_involved:
-            animal_data["rehearsals_attended"] += 1
-            animal_data["performance_rating"] = min(100, 
-                animal_data["performance_rating"] + random.uniform(0.5, 2))
-
-        self.rehearsals_completed += 1
-        self.success_rate = min(98, self.success_rate + 0.5)
-        
-        return rehearsal_result
-
-    def assign_trainer(self, trainer: Trainer) -> bool:
-        """Назначает тренера на шоу."""
-        if isinstance(trainer, Trainer) and trainer not in self.trainers_required:
+    def add_trainer(self, trainer: Trainer) -> bool:
+        """Добавляет тренера в шоу."""
+        if trainer.staff_id not in [t.staff_id for t in self.trainers_required]:
             self.trainers_required.append(trainer)
             return True
         return False
 
-    def calculate_show_readiness(self) -> float:
-        """Рассчитывает готовность шоу."""
-        base_readiness = self.success_rate
-        rehearsal_bonus = min(20, self.rehearsals_completed * 2)
-        animal_experience = sum(
-            animal_data["performance_rating"] 
-            for animal_data in self.animals_involved
-        ) / max(1, len(self.animals_involved))
+    def conduct_show(self) -> Dict[str, Any]:
+        """Проводит шоу."""
+        if len(self.animals_involved) == 0:
+            raise ValueError("Нет животных для шоу")
         
-        readiness = (base_readiness + rehearsal_bonus + animal_experience) / 3
-        return min(100, readiness)
+        if len(self.trainers_required) == 0:
+            raise ValueError("Нет тренеров для шоу")
+
+        # Симуляция успешности шоу
+        show_success = random.random() < (self.success_rate / 100)
+        spectator_satisfaction = random.uniform(70, 99)
+        
+        # Влияние на животных
+        for animal in self.animals_involved:
+            animal.activity_level += random.randint(10, 20)
+            animal.stress_level += random.randint(5, 15)
+
+        result = {
+            "show_id": self.show_id,
+            "name": self.name,
+            "duration": self.duration,
+            "animals_count": len(self.animals_involved),
+            "trainers_count": len(self.trainers_required),
+            "success": show_success,
+            "spectator_satisfaction": spectator_satisfaction,
+            "timestamp": datetime.now()
+        }
+
+        return result
+
+    def get_show_statistics(self) -> Dict[str, Any]:
+        """Возвращает статистику шоу."""
+        return {
+            "total_scheduled": len(self.schedule),
+            "animals_involved": len(self.animals_involved),
+            "trainers_required": len(self.trainers_required),
+            "success_rate": self.success_rate,
+            "max_spectators": self.max_spectators
+        }
+
