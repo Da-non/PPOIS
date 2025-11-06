@@ -57,7 +57,67 @@ Veterinarian 6 2 → Staff
 Feeder 6 3 → Staff
 - Поля: feeding_schedule, food_inventory, animals_assigned, feeding_logs, nutrition_knowledge
 - Методы: feed_animal, check_food_quality, restock_food
-  
+
+## EQUIPMENT MODULE
+
+Equipment 11 3 →
+- Поля: equipment_id, name, manufacturer, installation_date, status, last_maintenance, maintenance_interval_days, power_consumption, warranty_expires, error_codes, operating_hours
+- Методы: perform_maintenance, check_status, reset_error
+
+WaterPump 4 3 → Equipment
+- Поля: flow_rate, pressure, pump_type, impeller_speed
+- Методы: perform_maintenance, adjust_flow_rate, check_cavitation
+
+FilterSystem 5 4 → Equipment
+- Поля: filter_capacity, filter_type, efficiency, filter_media_age, backwash_frequency
+- Методы: perform_maintenance, backwash, replace_filter_media
+
+TemperatureController 6 4 → Equipment
+- Поля: target_temperature, current_temperature, heating_power, cooling_power, temperature_tolerance, sensor_accuracy
+- Методы: perform_maintenance, set_temperature, regulate_temperature
+
+Tank 11 7 → Animal, Equipment
+- Поля: tank_id, capacity, current_volume, tank_type, animals, equipment, water_parameters, last_cleaned, viewing_windows, depth, surface_area
+- Методы: add_animal, remove_animal, get_max_animals, check_animal_compatibility, add_equipment, check_water_quality, clean_tank
+
+MonitoringSystem 8 6 →
+- Поля: system_id, sensors, alerts, data_logs, monitoring_frequency, alert_thresholds, backup_systems, notification_emails
+- Методы: add_sensor, read_sensor_data, check_alert_thresholds, create_alert, acknowledge_alert
+
+SecuritySystem 8 5 →
+- Поля: system_id, access_zones, key_cards, security_logs, emergency_mode, cameras, motion_sensors, alarm_status
+- Методы: create_access_zone, issue_keycard, check_access, log_security_event, activate_emergency_mode
+
+## FINANCE MODULE 
+
+FinancialReport 13 5 →
+- Поля: report_id, period_start, period_end, report_type, revenue_breakdown, expense_breakdown, profit_loss, visitor_statistics, animal_care_costs, staff_costs, maintenance_costs, generated_date, is_finalized
+- Методы: add_revenue_category, add_expense_category, calculate_profit_loss, generate_summary, finalize_report
+
+BankAccount 12 7 →
+- Поля: account_number, holder_name, balance, currency, account_type, created_date, transactions, daily_limit, daily_spent, last_reset_date, is_frozen, overdraft_limit
+- Методы: deposit, withdraw, transfer, add_transaction, get_balance, reset_daily_limit
+
+CreditCard 12 4 →
+- Поля: card_number, holder_name, expiry_date, cvv, credit_limit, current_balance, minimum_payment, interest_rate, is_active, is_blocked, transactions, payment_due_date
+- Методы: charge, make_payment, block_card, unblock_card
+
+PaymentProcessor 7 4 → CreditCard
+- Поля: processor_id, supported_methods, transaction_fee, daily_limits, processed_transactions, failed_transactions, maintenance_mode
+- Методы: process_payment, refund_payment, get_daily_volume
+
+Ticket 11 3 →
+- Поля: ticket_id, ticket_type, price, valid_from, valid_until, is_used, purchase_time, visitor_id, entry_time, exit_time, special_permissions
+- Методы: validate, use_ticket, add_special_permission
+
+Visitor 13 5 → Ticket, PaymentProcessor
+- Поля: visitor_id, name, email, phone, age, registration_date, tickets, visit_history, preferences, membership_type, loyalty_points, emergency_contact, special_needs
+- Методы: purchase_ticket, enter_oceanarium, exit_oceanarium, add_preference, upgrade_membership
+
+TicketOffice 10 8 → Visitor, CreditCard, PaymentProcessor
+- Поля: office_id, cashier_name, ticket_prices, daily_sales, cash_register, shift_start_time, shift_end_time, payment_processor, discount_codes, promotional_offers
+- Методы: start_shift, sell_ticket, apply_discounts, end_shift, get_payment_method_breakdown, add_discount_code, add_promotional_offer
+
 **Исключения**:
 
 OceanariumBaseException 0 0 → 
