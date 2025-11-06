@@ -7,60 +7,78 @@ class BreedingProgram:
         self.breeding_pairs = []
         self.successful_births = 0
         self.genetic_diversity = 85.0
-        self.facilities = []
-        self.breeding_season = "year_round"
-        self.offspring_records = []
+        self.breeding_season = random.choice(["spring", "summer", "year_round"])
+        self.gestation_period = random.randint(30, 365)  # дни
+        self.offspring_survival_rate = random.uniform(60, 95)
         self.research_data = []
 
-    def add_breeding_pair(self, male: Animal, female: Animal) -> bool:
+    def add_breeding_pair(self, animal1: Animal, animal2: Animal) -> bool:
         """Добавляет пару для разведения."""
-        if (male.species == self.target_species and 
-            female.species == self.target_species and
-            male.gender == "male" and 
-            female.gender == "female"):
+        if (animal1.species == self.target_species and 
+            animal2.species == self.target_species and
+            animal1.animal_id != animal2.animal_id):
             
             pair = {
-                "male": male,
-                "female": female,
+                "male": animal1 if random.random() > 0.5 else animal2,
+                "female": animal2 if random.random() > 0.5 else animal1,
                 "pairing_date": datetime.now(),
                 "successful_breedings": 0,
-                "compatibility_score": random.uniform(60, 95)
+                "last_breeding": None
             }
             self.breeding_pairs.append(pair)
             return True
         return False
 
-    def record_birth(self, mother: Animal, offspring_count: int, date: datetime) -> str:
-        """Регистрирует рождение потомства."""
-        birth_id = f"BIRTH_{len(self.offspring_records):04d}"
-        birth_record = {
-            "birth_id": birth_id,
-            "mother": mother.animal_id,
-            "offspring_count": offspring_count,
-            "birth_date": date,
-            "survival_rate": random.uniform(80, 98),
-            "health_status": "good"
-        }
-        
-        self.offspring_records.append(birth_record)
-        self.successful_births += offspring_count
-        
-        # Обновление генетического разнообразия
-        self.genetic_diversity = min(95, self.genetic_diversity + 0.5)
-        
-        return birth_id
+    def attempt_breeding(self, pair_index: int) -> Dict[str, Any]:
+        """Пытается провести размножение пары."""
+        if pair_index >= len(self.breeding_pairs):
+            raise ValueError("Неверный индекс пары")
 
-    def calculate_success_rate(self) -> float:
-        """Рассчитывает успешность программы разведения."""
-        if not self.breeding_pairs:
-            return 0.0
-            
-        total_pairs = len(self.breeding_pairs)
-        successful_pairs = sum(1 for pair in self.breeding_pairs 
-                             if pair["successful_breedings"] > 0)
+        pair = self.breeding_pairs[pair_index]
+        success_chance = random.uniform(40, 80)
         
-        pair_success = (successful_pairs / total_pairs) * 100
-        genetic_score = self.genetic_diversity
-        birth_success = min(100, (self.successful_births / max(1, total_pairs)) * 10)
+        # Учитываем генетическое разнообразие
+        success_chance *= (self.genetic_diversity / 100)
         
-        return (pair_success + genetic_score + birth_success) / 3
+        success = random.random() < (success_chance / 100)
+
+        if success:
+            pair["successful_breedings"] += 1
+            pair["last_breeding"] = datetime.now()
+            self.successful_births += random.randint(1, 3)  # 1-3 детёныша
+            self.genetic_diversity = max(70, self.genetic_diversity - 0.5)  # Небольшое снижение разнообразия
+
+        result = {
+            "success": success,
+            "pair_index": pair_index,
+            "breeding_date": datetime.now(),
+            "genetic_diversity_impact": -0.5 if success else 0,
+            "offspring_count": random.randint(1, 3) if success else 0
+        }
+
+        self.research_data.append(result)
+        return result
+
+    def introduce_new_genetics(self, new_animal: Animal) -> bool:
+        """Вводит новую генетику в программу."""
+        if new_animal.species == self.target_species:
+            self.genetic_diversity = min(95.0, self.genetic_diversity + 5.0)
+            return True
+        return False
+
+    def get_program_statistics(self) -> Dict[str, Any]:
+        """Возвращает статистику программы."""
+        active_pairs = len([p for p in self.breeding_pairs if p["last_breeding"] is None or 
+                          (datetime.now() - p["last_breeding"]).days > 30])
+        
+        return {
+            "program_id": self.program_id,
+            "target_species": self.target_species,
+            "breeding_pairs": len(self.breeding_pairs),
+            "active_pairs": active_pairs,
+            "successful_births": self.successful_births,
+            "genetic_diversity": self.genetic_diversity,
+            "survival_rate": self.offspring_survival_rate,
+            "research_data_points": len(self.research_data)
+        }
+
