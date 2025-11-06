@@ -1,7 +1,7 @@
 Oceanarium Domain Model
 =====================
 
-*Исключения*:
+**Исключения**:
 
 OceanariumBaseException 0 0 → 
 AnimalNotFoundException 1 0 → 
@@ -17,7 +17,7 @@ MaintenanceModeException 2 0 →
 AnimalHealthException 2 0 →
 PaymentProcessingException 2 0 →
 
-Итоги:
+**Итоги**:
 Классы: 63
 Поля: 294
 Поведения: 113
