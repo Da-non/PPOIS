@@ -432,3 +432,4 @@ class Oceanarium:
             stats["tank_distribution"][tank_id] = stats["tank_distribution"].get(tank_id, 0) + 1
 
         return stats
+    
