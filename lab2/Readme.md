@@ -26,22 +26,6 @@ Turtle 6 3 → MarineAnimal
 - Поля: shell_hardness, navigation_accuracy, nesting_sites, magnetic_sensitivity, flipper_strength
 - Методы: navigate, lay_eggs, retract_into_shell
 
-Jellyfish 6 2 → MarineAnimal
-- Поля: tentacle_length, toxicity_level, pulsation_rate, bioluminescence, regeneration_ability
-- Методы: pulsate, sting
-
-Octopus 6 3 → MarineAnimal
-- Поля: arm_count, intelligence_level, camouflage_ability, ink_capacity, sucker_strength
-- Методы: camouflage, release_ink, solve_puzzle
-
-Stingray 5 2 → MarineAnimal
-- Поля: wingspan, sting_barb_count, electrical_output, burial_depth
-- Методы: bury_in_sand, electric_shock
-
-SeaHorse 6 3 → MarineAnimal
-- Поля: tail_length, color_change_ability, gender, pouch_capacity, grip_strength
-- Методы: grip_with_tail, change_color, carry_eggs
-
 Staff 11 3 →
 - Поля: staff_id, name, position, salary, experience_years, hire_date, certifications, performance_rating, working_hours_per_week, department, access_level
 - Методы: perform_daily_tasks, receive_certification, calculate_monthly_salary
@@ -118,6 +102,114 @@ TicketOffice 10 8 → Visitor, CreditCard, PaymentProcessor
 - Поля: office_id, cashier_name, ticket_prices, daily_sales, cash_register, shift_start_time, shift_end_time, payment_processor, discount_codes, promotional_offers
 - Методы: start_shift, sell_ticket, apply_discounts, end_shift, get_payment_method_breakdown, add_discount_code, add_promotional_offer
 
+## ADDITIONAL MODULE 
+
+Jellyfish 6 4 → MarineAnimal
+- Поля: tentacle_length, toxicity_level, pulsation_rate, bioluminescence, regeneration_ability
+- Методы: get_feeding_requirements, get_habitat_requirements, pulsate, sting
+
+Octopus 6 5 → MarineAnimal
+- Поля: arm_count, intelligence_level, camouflage_ability, ink_capacity, sucker_strength
+- Методы: get_feeding_requirements, get_habitat_requirements, camouflage, release_ink, solve_puzzle
+
+Stingray 5 4 → MarineAnimal
+- Поля: wingspan, sting_barb_count, electrical_output, burial_depth
+- Методы: get_feeding_requirements, get_habitat_requirements, bury_in_sand, electric_shock
+
+SeaHorse 6 5 → MarineAnimal
+- Поля: tail_length, color_change_ability, gender, pouch_capacity, grip_strength
+- Методы: get_feeding_requirements, get_habitat_requirements, grip_with_tail, change_color, carry_eggs
+
+Manager 6 4 → Staff
+- Поля: department, team_size, decision_authority, meetings_per_week, budget_responsibility
+- Методы: perform_daily_tasks, make_decision, conduct_meeting, approve_budget
+
+SecurityGuard 6 4 → Staff
+- Поля: patrol_route, security_clearance, emergency_response_time, incident_reports, radio_frequency
+- Методы: perform_daily_tasks, patrol, respond_to_emergency, file_incident_report
+
+MaintenanceWorker 6 4 → Staff
+- Поля: specialization, tools_inventory, work_orders_completed, safety_incidents, efficiency_rating
+- Методы: perform_daily_tasks, repair_equipment, perform_preventive_maintenance, add_tool
+
+TourGuide 6 4 → Staff
+- Поля: languages, tour_routes, groups_per_day, visitor_satisfaction, knowledge_base
+- Методы: perform_daily_tasks, conduct_tour, add_language, learn_animal_facts
+
+ResearchScientist 6 4 → Staff
+- Поля: research_field, publications, current_projects, research_grants, laboratory_access
+- Методы: perform_daily_tasks, conduct_study, publish_research, apply_for_grant
+
+FoodSupplier 9 4 →
+- Поля: supplier_id, company_name, food_types, delivery_schedule, quality_rating, price_per_kg, reliability_score, contact_info, payment_terms
+- Методы: add_food_type, schedule_delivery, deliver_food, check_quality
+
+EducationalProgram 10 4 → Staff, Visitor
+- Поля: program_id, name, target_audience, duration_minutes, learning_objectives, required_animals, materials_needed, instructor, participant_limit, effectiveness_rating
+- Методы: add_learning_objective, assign_instructor, conduct_session, evaluate_effectiveness
+
+EmergencyResponse 7 5 →
+- Поля: response_id, emergency_contacts, evacuation_plans, emergency_equipment, incident_log, alert_system, response_time_target
+- Методы: create_evacuation_plan, trigger_emergency_alert, initiate_evacuation, add_emergency_equipment, test_emergency_systems
+
+# OCEANARIUM MAIN MODULE 
+
+AquariumShow 11 5 → Animal, Trainer
+- Поля: show_id, name, duration, schedule, animals_involved, trainers_required, equipment_needed, max_spectators, show_type, difficulty_level, success_rate
+- Методы: schedule_show, add_animal, add_trainer, conduct_show, get_show_statistics
+
+ConservationProgram 11 6 → ResearchScientist
+- Поля: program_id, species, goal, budget, researchers, success_rate, start_date, end_date, milestones, funding_sources, published_research
+- Методы: allocate_budget, add_researcher, add_milestone, complete_milestone, publish_research, get_program_progress
+
+WaterTreatmentSystem 8 5 → Equipment
+- Поля: system_id, capacity, filtration_level, chemical_balance, maintenance_schedule, water_quality_history, filtration_media_age, max_media_age
+- Методы: perform_maintenance, treat_water, schedule_maintenance, get_water_quality_report
+
+BreedingProgram 9 5 → Animal
+- Поля: program_id, target_species, breeding_pairs, successful_births, genetic_diversity, breeding_season, gestation_period, offspring_survival_rate, research_data
+- Методы: add_breeding_pair, attempt_breeding, introduce_new_genetics, get_program_statistics
+
+VisitorCenter 9 6 → Visitor, TourGuide
+- Поля: center_id, capacity, facilities, daily_visitors, guided_tours, current_visitors, opening_time, closing_time, facility_cleanliness
+- Методы: add_facility, register_visitor, remove_visitor, schedule_guided_tour, clean_facilities, get_center_status
+
+ResearchLaboratory 8 6 → Equipment, ResearchScientist
+- Поля: lab_id, specialization, equipment, research_projects, publications, safety_level, certification_status, resource_utilization
+- Методы: add_equipment, start_research_project, add_team_member, record_finding, publish_research, get_laboratory_report
+
+AnimalHospital 8 7 → Animal, Veterinarian
+- Поля: hospital_id, capacity, quarantine_units, surgical_rooms, patients, medical_staff, medical_equipment, success_rate
+- Методы: add_quarantine_unit, add_surgical_room, admit_patient, assign_veterinarian, perform_surgery, discharge_patient, get_hospital_status
+
+UnderwaterTunnel 9 6 → Visitor
+- Поля: tunnel_id, length, viewing_windows, cleaning_schedule, visitor_capacity, current_visitors, water_visibility, lighting_intensity, maintenance_status
+- Методы: add_viewing_window, enter_tunnel, exit_tunnel, schedule_cleaning, perform_cleaning, get_tunnel_status
+
+MarineEcosystem 8 6 →
+- Поля: ecosystem_id, biome_type, species_diversity, environmental_params, conservation_status, food_web, biodiversity_index, threat_level
+- Методы: add_species, update_environmental_param, assess_ecosystem_health, calculate_biodiversity_index, get_ecosystem_report
+
+EducationalCenter 7 7 → Staff
+- Поля: center_id, classrooms, workshops, student_groups, educational_materials, available_classrooms, booking_schedule
+- Методы: create_workshop, register_student_group, add_educational_material, book_classroom, conduct_workshop, get_center_statistics
+
+AquacultureFacility 8 6 →
+- Поля: facility_id, production_type, production_capacity, species_cultured, harvest_schedule, water_quality_params, feed_inventory, growth_data
+- Методы: add_species, schedule_harvest, monitor_growth, perform_harvest, get_facility_report
+
+MarineConservation 7 6 →
+- Поля: department_id, focus_areas, conservation_projects, research_grants, community_outreach, success_stories, partnerships
+- Методы: create_conservation_project, apply_for_grant, organize_community_event, record_success_story, get_conservation_report
+
+OceanographicResearch 7 6 →
+- Поля: research_id, ocean_region, research_vessels, data_collection, scientific_discoveries, research_expeditions, collaborating_institutions
+- Методы: add_research_vessel, plan_expedition, collect_ocean_data, record_discovery, get_research_summary
+
+Oceanarium 21 20 → Animal, Tank, Staff, Visitor, Equipment, MonitoringSystem, SecuritySystem, EmergencyResponse, PaymentProcessor, BankAccount, TicketOffice, FoodSupplier, EducationalProgram
+- Поля: name, location, capacity, opening_hours, animals, tanks, staff, visitors, equipment, monitoring_system, security_system, emergency_response, payment_processor, bank_account, ticket_offices, food_suppliers, educational_programs, daily_visitors, monthly_revenue, operational_status, last_inspection_date
+- Методы: add_animal, add_tank, hire_staff, add_visitor, create_ticket_office, add_food_supplier, create_educational_program, feed_all_animals, conduct_health_checks, monitor_water_quality, generate_daily_report, process_visitor_entry, conduct_training_session, schedule_maintenance, activate_emergency_protocol, close_for_day, open_for_day, get_occupancy_rate, transfer_animal, calculate_monthly_expenses, get_animal_statistics
+
 **Исключения**:
 
 OceanariumBaseException 0 0 → 
@@ -136,8 +228,8 @@ PaymentProcessingException 2 0 →
 
 **Итоги**:
 Классы: 63
-Поля: 294
-Поведения: 113
+Поля: 418
+Поведения: 246
 Ассоциации: 52
 Исключения: 13
 
