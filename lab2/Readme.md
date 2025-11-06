@@ -1,5 +1,6 @@
 Oceanarium Domain Model
 =====================
+## CORE MODULE
 
 **Исключения**:
 
