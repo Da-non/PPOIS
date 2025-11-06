@@ -152,7 +152,7 @@ EmergencyResponse 7 5 →
 - Поля: response_id, emergency_contacts, evacuation_plans, emergency_equipment, incident_log, alert_system, response_time_target
 - Методы: create_evacuation_plan, trigger_emergency_alert, initiate_evacuation, add_emergency_equipment, test_emergency_systems
 
-# OCEANARIUM MAIN MODULE 
+## OCEANARIUM MAIN MODULE 
 
 AquariumShow 11 5 → Animal, Trainer
 - Поля: show_id, name, duration, schedule, animals_involved, trainers_required, equipment_needed, max_spectators, show_type, difficulty_level, success_rate
