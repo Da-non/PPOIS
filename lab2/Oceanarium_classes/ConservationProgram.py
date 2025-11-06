@@ -7,16 +7,15 @@ class ConservationProgram:
         self.goal = goal
         self.budget = 0.0
         self.researchers = []
-        self.success_rate = 0.0
+        self.success_rate = random.uniform(50, 90)
         self.start_date = datetime.now()
-        self.end_date = None
+        self.end_date = datetime.now() + timedelta(days=365 * 3)  # 3 года
         self.milestones = []
-        self.partners = []
-        self.fieldwork_locations = []
-        self.publications = []
+        self.funding_sources = []
+        self.published_research = []
 
     def allocate_budget(self, amount: float) -> bool:
-        """Выделяет бюджет для программы."""
+        """Выделяет бюджет программе."""
         if amount > 0:
             self.budget += amount
             return True
@@ -24,23 +23,22 @@ class ConservationProgram:
 
     def add_researcher(self, researcher: ResearchScientist) -> bool:
         """Добавляет исследователя в программу."""
-        if isinstance(researcher, ResearchScientist):
+        if researcher.staff_id not in [r.staff_id for r in self.researchers]:
             self.researchers.append(researcher)
-            self.success_rate = min(100, self.success_rate + 5)
             return True
         return False
 
-    def add_milestone(self, milestone: str, deadline: datetime) -> str:
+    def add_milestone(self, milestone: str, deadline: datetime) -> bool:
         """Добавляет веху в программу."""
-        milestone_id = f"MILESTONE_{len(self.milestones):04d}"
-        self.milestones.append({
-            "id": milestone_id,
+        milestone_data = {
+            "id": f"MILESTONE_{len(self.milestones) + 1}",
             "description": milestone,
             "deadline": deadline,
             "completed": False,
             "completion_date": None
-        })
-        return milestone_id
+        }
+        self.milestones.append(milestone_data)
+        return True
 
     def complete_milestone(self, milestone_id: str) -> bool:
         """Отмечает веху как выполненную."""
@@ -48,20 +46,34 @@ class ConservationProgram:
             if milestone["id"] == milestone_id:
                 milestone["completed"] = True
                 milestone["completion_date"] = datetime.now()
-                self.success_rate = min(100, self.success_rate + 10)
+                self.success_rate += 2.0  # Увеличиваем успешность
                 return True
         return False
 
-    def publish_findings(self, title: str, journal: str) -> str:
-        """Публикует результаты исследований."""
-        publication_id = f"PUB_{len(self.publications):04d}"
+    def publish_research(self, title: str, findings: str) -> str:
+        """Публикует исследование по программе."""
+        publication_id = f"PUB_{len(self.published_research) + 1}"
         publication = {
             "id": publication_id,
             "title": title,
-            "journal": journal,
-            "date": datetime.now(),
-            "program": self.program_id,
-            "impact_factor": random.uniform(1.0, 8.0)
+            "findings": findings,
+            "publication_date": datetime.now(),
+            "authors": [r.name for r in self.researchers]
         }
-        self.publications.append(publication)
+        self.published_research.append(publication)
         return publication_id
+
+    def get_program_progress(self) -> Dict[str, Any]:
+        """Возвращает прогресс программы."""
+        completed_milestones = len([m for m in self.milestones if m["completed"]])
+        total_milestones = len(self.milestones)
+        
+        return {
+            "program_id": self.program_id,
+            "species": self.species,
+            "progress": (completed_milestones / total_milestones * 100) if total_milestones > 0 else 0,
+            "budget_utilized": self.budget,
+            "researchers_count": len(self.researchers),
+            "publications_count": len(self.published_research),
+            "success_rate": self.success_rate
+        }
