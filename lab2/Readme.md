@@ -14,15 +14,15 @@ Dolphin 5 4 → MarineAnimal
 - Поля: intelligence_level, echolocation_range, social_group, tricks_learned, communication_frequency
 - Методы: perform_trick, learn_trick, echolocate, communicate
 
-Shark 6 3 → MarineAnimal
+Shark 5 3 → MarineAnimal
 - Поля: aggression_level, hunting_success_rate, teeth_count, electrical_sense_range, bite_force
 - Методы: hunt, detect_electrical_field, shed_teeth
 
-Whale 6 3 → MarineAnimal
+Whale 5 3 → MarineAnimal
 - Поля: lung_capacity, dive_depth_max, song_frequency, blubber_thickness, baleen_plates
 - Методы: dive, sing, filter_feed
 
-Turtle 6 3 → MarineAnimal
+Turtle 5 3 → MarineAnimal
 - Поля: shell_hardness, navigation_accuracy, nesting_sites, magnetic_sensitivity, flipper_strength
 - Методы: navigate, lay_eggs, retract_into_shell
 
@@ -30,7 +30,7 @@ Staff 11 3 →
 - Поля: staff_id, name, position, salary, experience_years, hire_date, certifications, performance_rating, working_hours_per_week, department, access_level
 - Методы: perform_daily_tasks, receive_certification, calculate_monthly_salary
 
-Trainer 6 2 → Staff
+Trainer 5 2 → Staff
 - Поля: specialization, training_sessions_count, animals_trained, training_techniques, safety_incidents
 - Методы: train_animal, assess_animal_behavior
 
