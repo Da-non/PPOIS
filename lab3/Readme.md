@@ -8,3 +8,4 @@ ItemEffect 8 4 →
 SkillEffect 6 3 → 
 AbilityEffect 6 3 → 
 Enchantment 7 3 → 
+пр
