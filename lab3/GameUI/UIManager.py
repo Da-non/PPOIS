@@ -9,14 +9,18 @@ class UIManager(GameEntity):
         self.focused_element: Optional[str] = None
 
     def update(self, delta_time: float) -> None:
+        """Обновляет все зарегистрированные UI-элементы"""
         for element in self.elements.values():
             element.update(delta_time)
 
     def register(self, element: GameEntity) -> None:
+        """Регистрирует новый UI-элемент в менеджере"""
         self.elements[element.entity_id] = element
 
     def unregister(self, element_id: str) -> bool:
+        """Удаляет UI-элемент из менеджера"""
         return self.elements.pop(element_id, None) is not None
 
     def set_theme(self, theme: str) -> None:
+        """Устанавливает тему интерфейса"""
         self.theme = theme
