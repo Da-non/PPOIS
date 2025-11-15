@@ -124,4 +124,4 @@ GameModerationException 3 1 → GameDevelopmentBaseException
 
 GameServerMaintenanceException 2 1 → GameDevelopmentBaseException
 
-Итого:50 классов,13 исключений,
+Итого:50 классов,13 исключений,290 полей,300 методов,72 ассоциации
