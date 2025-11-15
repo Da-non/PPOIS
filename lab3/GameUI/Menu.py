@@ -11,12 +11,15 @@ class Menu(GameEntity):
         pass
 
     def add_item(self, key: str, callback: Any) -> None:
+        """Добавляет пункт меню"""
         self.items[key] = callback
 
     def remove_item(self, key: str) -> bool:
+         """Удаляет пункт меню"""
         return self.items.pop(key, None) is not None
 
     def trigger(self, key: str) -> bool:
+        """Вызывает обработчик пункта меню"""
         cb = self.items.get(key)
         if cb:
             cb()
