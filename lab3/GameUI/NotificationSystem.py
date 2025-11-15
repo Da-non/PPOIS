@@ -7,15 +7,13 @@ class NotificationSystem(GameEntity):
         self.history: List[Dict[str, Any]] = []
         self.max_history: int = 100
 
-    def update(self, delta_time: float) -> None:
-        # Автосброс просроченных сообщений пока не нужен
-        pass
-
     def push(self, message: str, level: str = "info") -> None:
+        """Добавляет новое уведомление в очередь"""
         note = {"message": message, "level": level, "time": datetime.now()}
         self.queue.append(note)
 
     def flush(self, limit: int = 10) -> List[Dict[str, Any]]:
+        """Извлекает уведомления из очереди для отображения"""
         out = self.queue[:limit]
         self.queue = self.queue[limit:]
         self.history.extend(out)
