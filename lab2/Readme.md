@@ -34,13 +34,13 @@ Trainer 5 2 → Staff
 - Поля: specialization, training_sessions_count, animals_trained, training_techniques, safety_incidents
 - Методы: train_animal, assess_animal_behavior,perform_daily_tasks
 
-Veterinarian 6 2 → Staff
-- Поля: medical_license, surgeries_performed, specializations, patients_treated, emergency_calls
-- Методы: examine_animal, prescribe_treatment
+Veterinarian 6 3 → Staff
+- Поля: medical_license, surgeries_performed, specializations, patients_treated, emergency_calls,access_level
+- Методы: examine_animal, prescribe_treatment,perform_daily_task
 
-Feeder 6 3 → Staff
-- Поля: feeding_schedule, food_inventory, animals_assigned, feeding_logs, nutrition_knowledge
-- Методы: feed_animal, check_food_quality, restock_food
+Feeder 6 4 → Staff
+- Поля: feeding_schedule, food_inventory, animals_assigned, feeding_logs, nutrition_knowledge,access_level
+- Методы: feed_animal, check_food_quality, restock_food,perform_daily_task
 
 ## EQUIPMENT MODULE
 
@@ -52,19 +52,19 @@ WaterPump 4 3 → Equipment
 - Поля: flow_rate, pressure, pump_type, impeller_speed
 - Методы: perform_maintenance, adjust_flow_rate, check_cavitation
 
-FilterSystem 5 4 → Equipment
-- Поля: filter_capacity, filter_type, efficiency, filter_media_age, backwash_frequency
+FilterSystem 6 3 → Equipment
+- Поля: filter_capacity, filter_type, efficiency, filter_media_age, backwash_frequency,maintenance_interval_days
 - Методы: perform_maintenance, backwash, replace_filter_media
 
-TemperatureController 6 4 → Equipment
-- Поля: target_temperature, current_temperature, heating_power, cooling_power, temperature_tolerance, sensor_accuracy
+TemperatureController 7 3 → Equipment
+- Поля: target_temperature, current_temperature, heating_power, cooling_power, temperature_tolerance, sensor_accuracy, maintenance_interval_days
 - Методы: perform_maintenance, set_temperature, regulate_temperature
 
 Tank 11 7 → Animal, Equipment
 - Поля: tank_id, capacity, current_volume, tank_type, animals, equipment, water_parameters, last_cleaned, viewing_windows, depth, surface_area
 - Методы: add_animal, remove_animal, get_max_animals, check_animal_compatibility, add_equipment, check_water_quality, clean_tank
 
-MonitoringSystem 8 6 →
+MonitoringSystem 8 5 →
 - Поля: system_id, sensors, alerts, data_logs, monitoring_frequency, alert_thresholds, backup_systems, notification_emails
 - Методы: add_sensor, read_sensor_data, check_alert_thresholds, create_alert, acknowledge_alert
 
@@ -78,7 +78,7 @@ FinancialReport 13 5 →
 - Поля: report_id, period_start, period_end, report_type, revenue_breakdown, expense_breakdown, profit_loss, visitor_statistics, animal_care_costs, staff_costs, maintenance_costs, generated_date, is_finalized
 - Методы: add_revenue_category, add_expense_category, calculate_profit_loss, generate_summary, finalize_report
 
-BankAccount 12 7 →
+BankAccount 12 6 →
 - Поля: account_number, holder_name, balance, currency, account_type, created_date, transactions, daily_limit, daily_spent, last_reset_date, is_frozen, overdraft_limit
 - Методы: deposit, withdraw, transfer, add_transaction, get_balance, reset_daily_limit
 
@@ -86,7 +86,7 @@ CreditCard 12 4 →
 - Поля: card_number, holder_name, expiry_date, cvv, credit_limit, current_balance, minimum_payment, interest_rate, is_active, is_blocked, transactions, payment_due_date
 - Методы: charge, make_payment, block_card, unblock_card
 
-PaymentProcessor 7 4 → CreditCard
+PaymentProcessor 7 3 → CreditCard
 - Поля: processor_id, supported_methods, transaction_fee, daily_limits, processed_transactions, failed_transactions, maintenance_mode
 - Методы: process_payment, refund_payment, get_daily_volume
 
@@ -98,46 +98,46 @@ Visitor 13 5 → Ticket, PaymentProcessor
 - Поля: visitor_id, name, email, phone, age, registration_date, tickets, visit_history, preferences, membership_type, loyalty_points, emergency_contact, special_needs
 - Методы: purchase_ticket, enter_oceanarium, exit_oceanarium, add_preference, upgrade_membership
 
-TicketOffice 10 8 → Visitor, CreditCard, PaymentProcessor
+TicketOffice 10 7 → Visitor, CreditCard, PaymentProcessor
 - Поля: office_id, cashier_name, ticket_prices, daily_sales, cash_register, shift_start_time, shift_end_time, payment_processor, discount_codes, promotional_offers
 - Методы: start_shift, sell_ticket, apply_discounts, end_shift, get_payment_method_breakdown, add_discount_code, add_promotional_offer
 
 ## ADDITIONAL MODULE 
 
-Jellyfish 6 4 → MarineAnimal
+Jellyfish 5 4 → MarineAnimal
 - Поля: tentacle_length, toxicity_level, pulsation_rate, bioluminescence, regeneration_ability
 - Методы: get_feeding_requirements, get_habitat_requirements, pulsate, sting
 
-Octopus 6 5 → MarineAnimal
+Octopus 5 5 → MarineAnimal
 - Поля: arm_count, intelligence_level, camouflage_ability, ink_capacity, sucker_strength
 - Методы: get_feeding_requirements, get_habitat_requirements, camouflage, release_ink, solve_puzzle
 
-Stingray 5 4 → MarineAnimal
+Stingray 4 4 → MarineAnimal
 - Поля: wingspan, sting_barb_count, electrical_output, burial_depth
 - Методы: get_feeding_requirements, get_habitat_requirements, bury_in_sand, electric_shock
 
-SeaHorse 6 5 → MarineAnimal
+SeaHorse 5 5 → MarineAnimal
 - Поля: tail_length, color_change_ability, gender, pouch_capacity, grip_strength
 - Методы: get_feeding_requirements, get_habitat_requirements, grip_with_tail, change_color, carry_eggs
 
 Manager 6 4 → Staff
-- Поля: department, team_size, decision_authority, meetings_per_week, budget_responsibility
+- Поля: department, team_size, decision_authority, meetings_per_week, budget_responsibility,access_level
 - Методы: perform_daily_tasks, make_decision, conduct_meeting, approve_budget
 
 SecurityGuard 6 4 → Staff
-- Поля: patrol_route, security_clearance, emergency_response_time, incident_reports, radio_frequency
+- Поля: patrol_route, security_clearance, emergency_response_time, incident_reports, radio_frequency,access_level
 - Методы: perform_daily_tasks, patrol, respond_to_emergency, file_incident_report
 
 MaintenanceWorker 6 4 → Staff
-- Поля: specialization, tools_inventory, work_orders_completed, safety_incidents, efficiency_rating
+- Поля: specialization, tools_inventory, work_orders_completed, safety_incidents, efficiency_rating,access_level
 - Методы: perform_daily_tasks, repair_equipment, perform_preventive_maintenance, add_tool
 
 TourGuide 6 4 → Staff
-- Поля: languages, tour_routes, groups_per_day, visitor_satisfaction, knowledge_base
+- Поля: languages, tour_routes, groups_per_day, visitor_satisfaction, knowledge_base,access_level
 - Методы: perform_daily_tasks, conduct_tour, add_language, learn_animal_facts
 
 ResearchScientist 6 4 → Staff
-- Поля: research_field, publications, current_projects, research_grants, laboratory_access
+- Поля: research_field, publications, current_projects, research_grants, laboratory_access,access_level
 - Методы: perform_daily_tasks, conduct_study, publish_research, apply_for_grant
 
 FoodSupplier 9 4 →
@@ -162,11 +162,11 @@ ConservationProgram 11 6 → ResearchScientist
 - Поля: program_id, species, goal, budget, researchers, success_rate, start_date, end_date, milestones, funding_sources, published_research
 - Методы: allocate_budget, add_researcher, add_milestone, complete_milestone, publish_research, get_program_progress
 
-WaterTreatmentSystem 8 5 → Equipment
+WaterTreatmentSystem 8 4 → Equipment
 - Поля: system_id, capacity, filtration_level, chemical_balance, maintenance_schedule, water_quality_history, filtration_media_age, max_media_age
 - Методы: perform_maintenance, treat_water, schedule_maintenance, get_water_quality_report
 
-BreedingProgram 9 5 → Animal
+BreedingProgram 9 4 → Animal
 - Поля: program_id, target_species, breeding_pairs, successful_births, genetic_diversity, breeding_season, gestation_period, offspring_survival_rate, research_data
 - Методы: add_breeding_pair, attempt_breeding, introduce_new_genetics, get_program_statistics
 
@@ -186,7 +186,7 @@ UnderwaterTunnel 9 6 → Visitor
 - Поля: tunnel_id, length, viewing_windows, cleaning_schedule, visitor_capacity, current_visitors, water_visibility, lighting_intensity, maintenance_status
 - Методы: add_viewing_window, enter_tunnel, exit_tunnel, schedule_cleaning, perform_cleaning, get_tunnel_status
 
-MarineEcosystem 8 6 →
+MarineEcosystem 8 5 →
 - Поля: ecosystem_id, biome_type, species_diversity, environmental_params, conservation_status, food_web, biodiversity_index, threat_level
 - Методы: add_species, update_environmental_param, assess_ecosystem_health, calculate_biodiversity_index, get_ecosystem_report
 
@@ -194,15 +194,15 @@ EducationalCenter 7 7 → Staff
 - Поля: center_id, classrooms, workshops, student_groups, educational_materials, available_classrooms, booking_schedule
 - Методы: create_workshop, register_student_group, add_educational_material, book_classroom, conduct_workshop, get_center_statistics
 
-AquacultureFacility 8 6 →
+AquacultureFacility 8 5 →
 - Поля: facility_id, production_type, production_capacity, species_cultured, harvest_schedule, water_quality_params, feed_inventory, growth_data
 - Методы: add_species, schedule_harvest, monitor_growth, perform_harvest, get_facility_report
 
-MarineConservation 7 6 →
+MarineConservation 7 5 →
 - Поля: department_id, focus_areas, conservation_projects, research_grants, community_outreach, success_stories, partnerships
 - Методы: create_conservation_project, apply_for_grant, organize_community_event, record_success_story, get_conservation_report
 
-OceanographicResearch 7 6 →
+OceanographicResearch 7 5 →
 - Поля: research_id, ocean_region, research_vessels, data_collection, scientific_discoveries, research_expeditions, collaborating_institutions
 - Методы: add_research_vessel, plan_expedition, collect_ocean_data, record_discovery, get_research_summary
 
@@ -227,7 +227,7 @@ AnimalHealthException 2 0 →
 PaymentProcessingException 2 0 →
 
 **Итоги**:
-Классы: 63
+Классы: 50
 Поля: 418
 Поведения: 246
 Ассоциации: 52
