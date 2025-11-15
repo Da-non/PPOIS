@@ -7,14 +7,14 @@ class Tooltip(GameEntity):
         self.visible = False
         self.anchor: Optional[str] = None
 
-    def update(self, delta_time: float) -> None:
-        # Нет динамики по умолчанию
-        pass
+    
 
     def show(self, anchor_id: str) -> None:
+        """Показывает подсказку, привязанную к конкретному элементу UI"""
         self.anchor = anchor_id
         self.visible = True
 
     def hide(self) -> None:
+        """Полностью скрывает и сбрасывает подсказку"""
         self.visible = False
         self.anchor = None
