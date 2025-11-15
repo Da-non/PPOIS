@@ -20,8 +20,6 @@ Enchantment 7 3 →
 
 GameDesigner 10 6 → 
 
-LevelDesigner 8 5 → 
-
 GameBalanceManager 5 6 → 
 
 QualityAssuranceTester 7 5 → 
