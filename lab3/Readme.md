@@ -98,6 +98,8 @@ NotificationSystem 4 4 → GameEntity
 
 Tooltip 4 3 → GameEntity
 
+PvPSystem.py 8 8 → 
+
 GameDevelopmentBaseException 0 1 →
 
 PlayerNotFoundException 1 1 → GameDevelopmentBaseException
