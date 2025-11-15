@@ -32,7 +32,7 @@ Staff 11 3 →
 
 Trainer 5 2 → Staff
 - Поля: specialization, training_sessions_count, animals_trained, training_techniques, safety_incidents
-- Методы: train_animal, assess_animal_behavior
+- Методы: train_animal, assess_animal_behavior,perform_daily_tasks
 
 Veterinarian 6 2 → Staff
 - Поля: medical_license, surgeries_performed, specializations, patients_treated, emergency_calls
