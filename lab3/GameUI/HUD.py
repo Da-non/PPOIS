@@ -8,6 +8,7 @@ class HUD(GameEntity):
         self.visible: bool = True
 
     def update(self, delta_time: float) -> None:
+        """Обновляет снапшот параметров игрока (health, mana, stamina, level)"""
         if not self.visible:
             return
         self.last_snapshot = {
@@ -18,4 +19,5 @@ class HUD(GameEntity):
         }
 
     def toggle(self) -> None:
+        """Переключает видимость HUD (вкл/выкл)"""
         self.visible = not self.visible
