@@ -213,18 +213,18 @@ Oceanarium 21 20 → Animal, Tank, Staff, Visitor, Equipment, MonitoringSystem, 
 **Исключения**:
 
 OceanariumBaseException 0 0 → 
-AnimalNotFoundException 1 0 → 
-InsufficientFundsException 2 0 → 
-InvalidPasswordException 1 0 →  
-TankOverflowException 3 0 → 
-EquipmentMalfunctionException 2 0 → 
-UnauthorizedAccessException 2 0 → 
-FeedingScheduleConflictException 2 0 → 
-InvalidTemperatureException 3 0 →
-TicketExpiredException 2 0 →
-MaintenanceModeException 2 0 →
-AnimalHealthException 2 0 →
-PaymentProcessingException 2 0 →
+AnimalNotFoundException 1 1 → 
+InsufficientFundsException 2 1 → 
+InvalidPasswordException 1 1 →  
+TankOverflowException 3 1 → 
+EquipmentMalfunctionException 2 1 → 
+UnauthorizedAccessException 2 1 → 
+FeedingScheduleConflictException 2 1 → 
+InvalidTemperatureException 3 1 →
+TicketExpiredException 2 1 →
+MaintenanceModeException 2 1 →
+AnimalHealthException 2 1 →
+PaymentProcessingException 2 1 →
 
 **Итоги**:
 Классы: 50
